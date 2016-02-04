@@ -97,7 +97,7 @@ namespace connect4
 			}
 			#endif
 
-			if (winner == null) {
+			if (winner == null && gamegrid.IsGameDone () != GameGrid.Token.UNDEFINED) {
 
 				int move = currentPlayer.GetMove ();
 				if (move != -1 && gamegrid.IsMoveValid (move)) {
