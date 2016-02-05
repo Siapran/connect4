@@ -17,11 +17,11 @@ namespace connect4
 		public override int GetMove ()
 		{
 			double maxValue = double.NegativeInfinity;
-			int move = 0;
+			int move = 3;
 			for (int col = 0; col < grid.Grid.GetLength (1); ++col) {
 				if (grid.IsMoveValid (col)) {
 					double value = moveValue (col);
-					if (move == 0 || value > maxValue) {
+					if (value > maxValue) {
 						maxValue = value;
 						move = col;
 						if (value == WIN_VALUE) {
@@ -46,13 +46,14 @@ namespace connect4
 
 		double alphaBetaPruning (int depth, double alpha, double beta, bool maxPlayer)
 		{
-			bool hasWinner = GameGrid.IsTokenPlayer (grid.IsGameDone ());
+			GameGrid.Token winner = grid.IsGameDone ();
+			bool hasWinner = GameGrid.IsTokenPlayer (winner);
 
 			// contrôle de la récursion
 			if (depth == 0 || hasWinner) {
 				double score = 0;
 				if (hasWinner) {
-					score = grid.IsGameDone () == color ? WIN_VALUE : LOSE_VALUE;
+					score = (winner == color) ? WIN_VALUE : LOSE_VALUE;
 				} else {
 					score = UNCERTAIN_VALUE;
 				}
